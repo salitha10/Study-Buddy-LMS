@@ -3,8 +3,8 @@ This is an open source project to build a free Learning Management System for sc
 
 MERN stack is used for the development. 
 
-Packages required - 
-**npm install express body-parser mongoose cors dotenv**
+**Packages required** - 
+npm install express body-parser mongoose cors dotenv
 
-Run backend - 
-**npm start**
+**Run backend** - 
+npm start
