@@ -48,3 +48,6 @@ const StudentSchema = new Schema({
     }
 });
 
+
+//Export schema
+module.exports = mongoose.model('Student', StudentSchema);

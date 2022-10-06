@@ -56,3 +56,7 @@ const CourseSchema = new Schema({
         default: Date.now
     }
 });
+
+
+//Export schema
+module.exports = mongoose.model('Course', CourseSchema);
