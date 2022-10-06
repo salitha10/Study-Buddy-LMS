@@ -14,9 +14,11 @@ const URL = process.env.MONGODB_URL;
 
 //Routes
 const userRoute = require('./routes/api/users');
-const userRoute = require('./routes/api/students');
+const studentRoute = require('./routes/api/students');
+const courseRoute = require('./routes/api/courses');
 app.use('/users', userRoute);
-app.use('/students', userRoute);
+app.use('/students', studentRoute);
+app.use('/courses', courseRoute);
 
 app.use(cors());
 app.use(bodyParser.json());
