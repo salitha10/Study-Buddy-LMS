@@ -124,4 +124,34 @@ router.get('/all', (req, res) => {
     .catch(err => res.status(404).json({ nostudentsfound: 'No students found' }));
 });
 
+
+//Get student by registration number
+router.get('/:registration_number', (req, res) => {
+    student.findOne({ registration_number: req.params.registration_number })
+    .then(student => res.json(student))
+    .catch(err =>
+        res.status(404).json({ nostudentfound: 'No student found with that registration number' })
+    );
+});
+
+
+//Updatew student by registration number
+router.put('/:registration_number', (req, res) => {
+    student.findOneAndUpdate({ registration_number: req.params.registration_number }, req.body, { new: true })
+    .then(student => res.json(student))
+    .catch(err =>
+        res.status(404).json({ nostudentfound: 'No student found with that registration number' })
+    );
+});
+
+//Delete student by registration number
+router.delete('/:registration_number', (req, res) => {
+    student.findOneAndDelete({ registration_number: req.params.registration_number })
+    .then(student => res.json(student))
+    .catch(err =>
+        res.status(404).json({ nostudentfound: 'No student found with that registration number' })
+    );
+});
+
+
 module.exports = router;
