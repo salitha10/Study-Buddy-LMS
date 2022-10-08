@@ -6,11 +6,16 @@ const dotenv = require('dotenv');
 const app = express();
 require('dotenv').config();
 
+
 //Port
 const PORT = process.env.PORT || 8070;
 
 //db URL
 const URL = process.env.MONGODB_URL;
+
+app.use(cors());
+app.use(express.json({limit: '20mb'}));
+app.use(express.urlencoded({ extended: false, limit: '20mb' }));
 
 //Routes
 const userRoute = require('./routes/api/users');
@@ -20,8 +25,6 @@ app.use('/users', userRoute);
 app.use('/students', studentRoute);
 app.use('/courses', courseRoute);
 
-app.use(cors());
-app.use(bodyParser.json());
 
 //Mongo bd options
 const options = {

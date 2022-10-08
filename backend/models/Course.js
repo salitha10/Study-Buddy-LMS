@@ -6,6 +6,10 @@ const CourseSchema = new Schema({
         type: String,
         required: true
     },
+    course_grade: {
+        type: String,
+        required: true
+    },
     description: {
         type: String,
         required: true
@@ -19,19 +23,7 @@ const CourseSchema = new Schema({
         type: String,
         required: true
     },
-    course_video: {
-        type: String,
-        required: true
-    },
-    course_price: {
-        type: Number,
-        required: true
-    },
-    course_duration: {
-        type: Number,
-        required: true
-    },
-    course_level: {
+    course_videos: {
         type: String,
         required: true
     },
