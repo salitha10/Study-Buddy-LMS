@@ -23,15 +23,20 @@ router.get('/test', (req, res) => res.json({ msg: 'Student Works' }));
 
 router.post('/register', (req, res) => {
     console.log(req.body);
-    // student.findOne({ email: req.body.email }).then(user => {
-    //     if (user) {
-    //     errors.email = 'Email already exists';
-    //     return res.status(400).json(errors);
-    //     } else {
+    student.findOne({ email: req.body.email }).then(user => {
+        if (user) {
+        return res.status(400).json({msg: 'Email already exists'});
+        } else {
         const newUser = new student({
             name: req.body.name,
             email: req.body.email,
-            password: req.body.password
+            password: req.body.password,
+            profile_picture: req.body.profile_picture,
+            date_of_birth: req.body.date_of_birth,
+            address: req.body.address,
+            phone_number: req.body.phone_number,
+            registration_number: req.body.registration_number,
+            courses: req.body.courses
         });
     
         bcrypt.genSalt(10, (err, salt) => {
@@ -44,8 +49,8 @@ router.post('/register', (req, res) => {
                 .catch(err => console.log(err));
             });
         });
-    //     }
-    // });
+        }
+    });
     });
 
 // @route   POST api/student/login
@@ -113,7 +118,7 @@ router.get(
     );
 
 //Get all students
-router.get('/', (req, res) => {
+router.get('/all', (req, res) => {
     student.find()
     .then(students => res.json(students))
     .catch(err => res.status(404).json({ nostudentsfound: 'No students found' }));

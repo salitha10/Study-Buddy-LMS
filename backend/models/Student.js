@@ -22,7 +22,7 @@ const StudentSchema = new Schema({
         type: Date,
         required: false
     },
-    location:{
+    address:{
         type: String,
         required: true
     },
