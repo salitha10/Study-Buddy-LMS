@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const course = require('../../models/Course');
 const express = require('express');  
 const router = express.Router();
+var bodyParser = require('body-parser')
 
 // @route   GET api/course
 // @desc    Tests course route
@@ -12,16 +13,15 @@ router.get('/test', (req, res) => res.json({ msg: 'Course Works' }));
 // @route   POST api/course/register
 // @desc    Register course
 // @access  Public
-router.post('/register', (req, res) => {
+router.post('/',(req, res) => {
+    console.log(req.body);
     const newCourse = new course({
         name: req.body.name,
+        course_grade: req.body.course_grade,
         description: req.body.description,
         course_code: req.body.course_code,
         course_image: req.body.course_image,
-        course_video: req.body.course_video,
-        course_price: req.body.course_price,
-        course_duration: req.body.course_duration,
-        course_level: req.body.course_level,
+        course_videos: req.body.course_videos,
         course_category: req.body.course_category,
         course_instructor: req.body.course_instructor,
         course_students: req.body.course_students
@@ -34,27 +34,18 @@ router.post('/register', (req, res) => {
     });
 
 
-//Edit course
-router.post('/edit', (req, res) => {
-    const newCourse = new course({
-        name: req.body.name,
-        description: req.body.description,
-        course_code: req.body.course_code,
-        course_image: req.body.course_image,
-        course_video: req.body.course_video,
-        course_price: req.body.course_price,
-        course_duration: req.body.course_duration,
-        course_level: req.body.course_level,
-        course_category: req.body.course_category,
-        course_instructor: req.body.course_instructor,
-        course_students: req.body.course_students
+//Update specific course
+router.put('/:code', (req, res) => {
+    console.log(req.body);
+    //Find by course code and update
+    course.findOneAndUpdate({course_code: req.params.code}, req.body, {new: true}, (err, course) => {
+        if (err) {
+            return res.status(500).send(err);
+        }
+        return res.send(course);
     });
+});
 
-    newCourse
-        .save()
-        .then(course => res.json(course))
-        .catch(err => console.log(err));
-    });
 
 //Get all courses
 router.get('/all', (req, res) => {
@@ -64,15 +55,16 @@ router.get('/all', (req, res) => {
     });
 
 //Get course by id
-router.get('/:id', (req, res) => {
-    course.findById(req.params.id)
+router.get('/:code', (req, res) => {
+    course.findOne({ course_code: req.params.code })
         .then(course => res.json(course))
         .catch(err => res.status(404).json({ nocoursefound: 'No course found' }));
     });
 
 //Delete course by id
-router.delete('/:id', (req, res) => {
-    course.findByIdAndRemove(req.params.id)
+router.delete('/:code', (req, res) => {
+    //Find by couse code and remove
+    course.findOneAndRemove({ course_code: req.params.code })
         .then(course => res.json(course))
         .catch(err => res.status(404).json({ nocoursefound: 'No course found' }));
     });
